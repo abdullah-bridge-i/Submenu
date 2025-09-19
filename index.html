@@ -1,0 +1,399 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* Header */
+	.header {
+		background: #ffffff;
+		box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+		position: relative;
+		z-index: 100;
+	}
+
+	.nav-container {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		height: 89px;
+		max-width: 1920px;
+		margin: 0 auto;
+		padding: 0 20px;
+	}
+
+	.logo {
+		display: flex;
+		align-items: center;
+	}
+
+	.logo-container {
+		height: 60px;
+		width: 280px;
+	}
+
+	.logo-img {
+		height: 60px;
+		width: auto;
+		object-fit: contain;
+	}
+
+	/* Desktop Navigation */
+	.desktop-nav {
+		display: flex;
+		align-items: center;
+		background: #886db9;
+		height: 89px;
+		padding: 0 40px;
+		margin-right: -20px;
+        list-style: none;
+	}
+
+	.nav-link {
+		color: #ffffff;
+		text-decoration: none;
+		font-weight: 600;
+		font-size: 16px;
+		padding: 0 20px;
+		position: relative;
+		transition: all 0.3s ease;
+	}
+
+	.nav-link::after {
+		content: '';
+		position: absolute;
+		bottom: -5px;
+		left: 20px;
+		width: 0;
+		height: 2px;
+		background: #ffffff;
+		transition: width 0.3s ease;
+	}
+
+	/* Active page underline for desktop */
+	.nav-link.active::after {
+		width: calc(100% - 40px);
+	}
+
+	.nav-link:hover::after {
+		width: calc(100% - 40px);
+	}
+
+	/* Mobile Menu Button */
+	.mobile-menu-btn {
+		display: none;
+		flex-direction: column;
+		background: none;
+		border: none;
+		cursor: pointer;
+		padding: 10px;
+		gap: 4px;
+	}
+
+	.hamburger-line {
+		width: 17px;
+		height: 2px;
+		background: #856caf;
+		transition: all 0.3s ease;
+	}
+
+	/* Mobile Menu Overlay */
+	.mobile-menu-overlay {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100vh;
+		background: #efe4ec;
+		z-index: 200;
+		transform: translateX(-100%);
+		transition: transform 0.3s ease;
+		overflow-y: auto;
+	}
+
+	.mobile-menu-overlay.open {
+		transform: translateX(0);
+	}
+
+	.mobile-menu-header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		height: 77px;
+		padding: 0 26px;
+		background: #ffffff;
+	}
+
+	.mobile-logo-container {
+		height: 53px;
+		width: 230px;
+	}
+
+	.mobile-logo img {
+		height: 53px;
+		width: 230px;
+		object-fit: contain;
+	}
+
+	.mobile-close-btn {
+		background: none;
+		border: none;
+		cursor: pointer;
+		padding: 10px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.mobile-nav {
+		padding: 51px 26px;
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+	}
+
+	.mobile-nav-item {
+		position: relative;
+		width: 100%;
+		max-width: 338px;
+	}
+
+	.mobile-nav-item.active {
+		background: #856caf;
+		height: 37px;
+		display: flex;
+		align-items: center;
+		padding-left: 3px;
+	}
+
+	.mobile-nav-item.active .mobile-nav-link {
+		color: #ffffff;
+		padding: 0 3px;
+		line-height: 37px;
+	}
+
+	.mobile-nav-item:not(.active):hover .mobile-nav-underline {
+		width: calc(100% - 6px);
+		opacity: 1;
+	}
+
+	.mobile-nav-item:not(.active):hover .mobile-nav-link {
+		color: #7154a0;
+	}
+
+	.mobile-nav-link {
+		font-family: 'Inter', sans-serif;
+		font-weight: 600;
+		font-size: 24px;
+		letter-spacing: 3.6px;
+		color: #856caf;
+		text-decoration: none;
+		display: block;
+		padding: 12px 3px;
+		text-transform: uppercase;
+		transition: all 0.3s ease;
+	}
+
+	.mobile-nav-underline {
+		position: absolute;
+		bottom: 0;
+		left: 3px;
+		width: 0;
+		height: 3px;
+		background: #856caf;
+		opacity: 0;
+		transition: width 0.3s ease, opacity 0.3s ease;
+	}
+
+	/* Mobile Utility and Language Links */
+	.mobile-nav-divider {
+		border: 0;
+		height: 1px;
+		background-color: #d1c5de;
+		margin: 25px 0;
+		max-width: 338px;
+	}
+
+	.mobile-utility-nav {
+		display: flex;
+		flex-direction: column;
+		gap: 15px;
+		max-width: 338px;
+		margin-top: 30px;
+	}
+
+	.mobile-utility-nav a,
+	.mobile-utility-nav span {
+		font-family: 'Inter', sans-serif;
+		font-weight: 500;
+		font-size: 18px;
+		color: #7154a0;
+		text-decoration: none;
+		text-transform: uppercase;
+		transition: color 0.3s ease;
+	}
+
+	.mobile-utility-nav a:hover {
+		color: #5c4488;
+	}
+	
+	.mobile-language-list {
+		margin-top: 20px;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 15px;
+	}
+
+	.mobile-language-list a,
+	.mobile-language-list span {
+		font-family: 'Inter', sans-serif;
+		font-weight: 500;
+		font-size: 16px;
+		color: #7154a0;
+		text-decoration: none;
+		transition: color 0.3s ease;
+	}
+
+	.mobile-language-list a:hover {
+		color: #5c4488;
+	}
+
+	.mobile-language-list .active span {
+		font-weight: 700;
+		border-bottom: 2px solid #7154a0;
+		padding-bottom: 2px;
+	}
+
+	/* Prevent body scroll when menu is open */
+	body.menu-open {
+		overflow: hidden;
+	}
+
+	/* Header Responsive */
+	@media (max-width: 768px) {
+		.nav-container {
+			height: 77px;
+			padding: 12px 26px;
+		}
+		
+		.logo-container {
+			height: 53px;
+			width: 230px;
+		}
+
+		.logo-img {
+			height: 53px;
+			width: 230px;
+			object-fit: contain;
+		}
+		
+		.desktop-nav {
+			display: none;
+		}
+		
+		.mobile-menu-btn {
+			display: flex;
+		}
+	}
+
+	@media (min-width: 769px) {
+		.mobile-menu-overlay {
+			display: none;
+		}
+		
+		.mobile-menu-btn {
+			display: none;
+		}
+	}
+
+    .nav, nav ul {
+      	list-style: none;
+    }
+
+    .nav li {
+      	position: relative;
+    }
+
+	.nav li:hover > .nav__submenu {
+      	max-height: 500px;
+      	opacity: 1;
+    }
+
+    .nav__submenu {
+		position: absolute;
+		max-height: 0;
+		opacity: 0;
+		transition: all 0.3s ease;
+		overflow: hidden;
+		top: 130%;
+		left: 10px;
+		padding: 0;
+		background: #fff;
+		color: #886db9;
+		border: 2px solid #886db9;
+		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    }
+
+	.nav__submenu li a {
+		display: block;
+		padding: 10px 15px;
+		text-decoration: none;
+    }
+
+	.nav__submenu li a:hover {
+		background: #efe4ec;
+    }
+
+    
+    </style>
+    
+</head>
+<body>
+    <nav>
+        <ul class="nav-menu desktop-nav nav">
+            <li class="nav-item">
+                <a href="/about" class="nav-link hasSubmenu" data-page="about">About UTMy</a>
+                <ul class="nav__submenu">
+					<li><a href="/about/greeting/">Greetings from President and Dean</a></li>
+					<li><a href="/about/">About UTMy</a></li>
+					<li><a href="/about/charter-of-utmy/">VISION・MISSION・BENEFITS</a></li>
+					<li><a href="/voices-from-UTMy/">VOICES FROM UTMy</a></li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a href="/about/faculties/" class="nav-link" data-page="study">Study / Research</a>
+                <ul class="nav__submenu">
+					<li><a href="/about/faculties/">Members</a></li>
+					<li><a href="/study/what-can-you-learn/">Curriculum</a></li>
+					<li><a href="/pbl/">PBL</a></li>
+					<li><a href="/degree/">Degree</a></li>
+					<li><a href="/research/">Research</a></li>
+					<li><a href="/more/partner/">Industry-Academia Collaboration</a></li>
+				</ul>
+            </li>
+            <li class="nav-item">
+                <a href="/student/support" class="nav-link" data-page="students">Students</a>
+				<ul class="nav__submenu">
+					<li><a href="/student/support/">Campus Life</a></li>
+					<li><a href="/student/financial_support/">Financial Support</a></li>
+					<li><a href="https://syushoku.sec.tsukuba.ac.jp/career/" target="_blank">Career Support</a></li>
+					<li><a href="/study/calendar/">Academic Calendar</a></li>
+				</ul>
+            </li>
+            <li class="nav-item">
+                <a href="/topics_list36/" class="nav-link" data-page="admissions">Admission</a>
+				<ul class="nav__submenu">
+					<li><a href="/admissions/application/">Basic Information</a></li>
+					<li><a href="/group-discussion/">Group Discussion</a></li>
+				</ul>
+            </li>
+            <li class="nav-item">
+                <a href="/news" class="nav-link" data-page="news">News & Events</a>
+            </li>
+            <li class="nav-item">
+                <a href="https://utmy.dreamapply.com" target="_blank" class="nav-link" data-page="apply">APPLY NOW</a>
+            </li>
+        </ul>
+    </nav>
+</body>
+</html>
